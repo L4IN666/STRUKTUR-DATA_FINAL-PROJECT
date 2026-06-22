@@ -9,7 +9,7 @@ public class Patient {
         this.nama = nama;
         this.keluhan = keluhan;
         this.urgency = urgency;
-        waktuMasuk = System.currentTimeMillis();
+        this.waktuMasuk = System.currentTimeMillis();
     }
 
     public String toString() {
