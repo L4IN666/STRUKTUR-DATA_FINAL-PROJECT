@@ -7,20 +7,28 @@ public class Main {
         Scanner in = new Scanner(System.in);
         HospitalQueue rs = new HospitalQueue();
 
+        System.out.println("╔══════════════════════════════════════╗");
+        System.out.println("║     SMART HOSPITAL QUEUE SYSTEM      ║");
+        System.out.println("╚══════════════════════════════════════╝");
+
         int pilih = 0;
 
-        while (pilih != 5) {
+        while (pilih != 6) {
 
-            System.out.println("\nSMART HOSPITAL QUEUE");
-            System.out.println("1 tambah pasien");
-            System.out.println("2 panggil pasien");
-            System.out.println("3 lihat queue");
-            System.out.println("4 statistik");
-            System.out.println("5 exit");
-            System.out.print("pilih : ");
+            System.out.println("\n──────────────────────────────────────");
+            System.out.println("  MENU UTAMA");
+            System.out.println("──────────────────────────────────────");
+            System.out.println("  1. Tambah pasien");
+            System.out.println("  2. Panggil pasien");
+            System.out.println("  3. Lihat antrian");
+            System.out.println("  4. Statistik");
+            System.out.println("  5. Real-time monitor");
+            System.out.println("  6. Exit");
+            System.out.println("──────────────────────────────────────");
+            System.out.print("  Pilih menu: ");
 
-            if(!in.hasNextInt()){
-                System.out.println("input angka");
+            if (!in.hasNextInt()) {
+                System.out.println("  ⚠ Masukkan angka 1-6.");
                 in.next();
                 continue;
             }
@@ -28,43 +36,37 @@ public class Main {
             pilih = in.nextInt();
             in.nextLine();
 
-            switch (pilih){
+            switch (pilih) {
 
                 case 1:
-
-                    System.out.print("nama : ");
+                    System.out.println("\n── Tambah Pasien Baru ──");
+                    System.out.print("  Nama      : ");
                     String nama = in.nextLine();
 
-                    System.out.print("keluhan : ");
+                    System.out.print("  Keluhan   : ");
                     String keluhan = in.nextLine();
 
-                    int urg;
+                    int urg = 0;
 
-                    while(true){
+                    while (true) {
+                        System.out.print("  Urgency (1-5) [>=3 = emergency] : ");
 
-                        System.out.print("urgency 1-5 : ");
-
-                        if(in.hasNextInt()){
+                        if (in.hasNextInt()) {
                             urg = in.nextInt();
-
-                            if(urg >=1 && urg <=5){
+                            if (urg >= 1 && urg <= 5) {
                                 break;
+                            } else {
+                                System.out.println("  ⚠ Urgency harus antara 1 sampai 5.");
                             }
-                        }else{
+                        } else {
+                            System.out.println("  ⚠ Masukkan angka.");
                             in.next();
                         }
-
-                        System.out.println("urgency harus 1-5");
                     }
 
                     in.nextLine();
 
-                    Patient p = new Patient(
-                            nama,
-                            keluhan,
-                            urg
-                    );
-
+                    Patient p = new Patient(nama, keluhan, urg);
                     rs.tambahPasien(p);
                     break;
 
@@ -81,11 +83,15 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("program selesai");
+                    rs.realTimeMonitor();
+                    break;
+
+                case 6:
+                    System.out.println("\n✅ Program selesai. Sampai jumpa!");
                     break;
 
                 default:
-                    System.out.println("menu ga ada");
+                    System.out.println("  ⚠ Menu tidak tersedia. Pilih 1-6.");
             }
         }
 
