@@ -1,4 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class HospitalQueue {
 
@@ -55,6 +61,7 @@ public class HospitalQueue {
         }
 
         selesai.add(p);
+        simpanRiwayat(p, wait);
 
         System.out.println("\n📢 Memanggil pasien:");
         System.out.println("   " + p);
@@ -151,6 +158,39 @@ public class HospitalQueue {
         int estimasi = (normal.size() + emergency.size()) * 10;
         System.out.printf("║  Estimasi antrian   : %-11d mnt║%n", estimasi);
 
+        System.out.println("╚══════════════════════════════════════╝");
+    }
+
+    public void simpanRiwayat(Patient p, long wait) {
+        try (FileWriter fw = new FileWriter("riwayat_pasien.txt", true)) {
+            String waktu = LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            fw.write("[" + waktu + "] "
+                    + p.nama + " | "
+                    + p.keluhan + " | "
+                    + "urgency " + p.urgency + " | "
+                    + "tunggu " + wait + " detik\n");
+        } catch (IOException e) {
+            System.out.println("⚠ Gagal menyimpan riwayat: " + e.getMessage());
+        }
+    }
+
+    public static void lihatRiwayat() {
+        System.out.println("\n╔══════════════════════════════════════╗");
+        System.out.println("║         RIWAYAT PASIEN               ║");
+        System.out.println("╠══════════════════════════════════════╣");
+        try (BufferedReader br = new BufferedReader(new FileReader("riwayat_pasien.txt"))) {
+            String line;
+            boolean ada = false;
+            while ((line = br.readLine()) != null) {
+                System.out.println("║  " + line);
+                ada = true;
+            }
+            if (!ada) System.out.println("║  (belum ada riwayat)                 ║");
+        } catch (IOException e) {
+            System.out.println("║  (file belum ada / belum ada pasien  ║");
+            System.out.println("║   yang dipanggil)                    ║");
+        }
         System.out.println("╚══════════════════════════════════════╝");
     }
 }

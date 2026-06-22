@@ -13,7 +13,7 @@ public class Main {
 
         int pilih = 0;
 
-        while (pilih != 6) {
+        while (pilih != 7) {
 
             System.out.println("\n──────────────────────────────────────");
             System.out.println("  MENU UTAMA");
@@ -23,7 +23,8 @@ public class Main {
             System.out.println("  3. Lihat antrian");
             System.out.println("  4. Statistik");
             System.out.println("  5. Real-time monitor");
-            System.out.println("  6. Exit");
+            System.out.println("  6. Lihat riwayat pasien");
+            System.out.println("  7. Exit");
             System.out.println("──────────────────────────────────────");
             System.out.print("  Pilih menu: ");
 
@@ -87,6 +88,10 @@ public class Main {
                     break;
 
                 case 6:
+                    rs.lihatRiwayat();
+                    break;
+
+                case 7:
                     System.out.println("\n✅ Program selesai. Sampai jumpa!");
                     break;
 
